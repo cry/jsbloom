@@ -16,6 +16,13 @@ From _Less Hashing, Same Performance: Building a Better Bloom Filter_ by Adam Ki
 
     filter.deleteEntry("xyz");
 
+### Testing
+
+Testing is done with mocha and chai
+
+    npm install mocha chai
+    mocha
+
 ### Parameters
 
     items: ceiling of entries to add
