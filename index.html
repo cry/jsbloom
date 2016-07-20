@@ -58,16 +58,17 @@
 
     <script>
 
-        let contents = [];
+        let contents = [],
+            filter = new JSBloom(500, 1E-5);
 
         var hash = function() {
             let val = document.getElementById("input").value;
 
-            document.getElementById("djb2").innerHTML = bloom.hashes.djb2(val);
+            document.getElementById("djb2").innerHTML = filter.hashes.djb2(val);
 
-            document.getElementById("sdbm").innerHTML = bloom.hashes.sdbm(val);
+            document.getElementById("sdbm").innerHTML = filter.hashes.sdbm(val);
 
-            document.getElementById("indices").innerHTML = bloom.hashes.getIndices(val);
+            document.getElementById("indices").innerHTML = filter.hashes.getIndices(val);
         }
 
         var add = function(e) {
@@ -75,7 +76,7 @@
 
             if (e.keyCode == 13) {
                 console.log("Adding " + val);
-                bloom.addEntry(val);
+                filter.addEntry(val);
 
                 contents.push(val);
                 document.getElementById("add").value = "";
@@ -90,7 +91,7 @@
 
             document.getElementById("search_element").innerHTML = val;
 
-            if (bloom.checkEntry(val)) {
+            if (filter.checkEntry(val)) {
                 status.innerHTML = "probably added";
             } else {
                 status.innerHTML = "definitely not added"
