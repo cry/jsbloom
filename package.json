@@ -9,10 +9,12 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.11",
+    "istanbul": "^0.4.4",
     "mocha": "*"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha"
+    "test": "node_modules/.bin/mocha && istanbul report text-summary lcov"
   },
   "repository": {
     "type": "git",
