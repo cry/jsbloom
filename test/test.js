@@ -98,6 +98,8 @@ describe('JSBloom', function() {
         });
 
         it('should return expected output on export', function() {
+            this.timeout(0);
+            
             assert.equal(filter.exportData(), importData);
         });
     });
