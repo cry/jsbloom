@@ -58,11 +58,19 @@ var JSBloom = function(items, target_prob) {
     }
 
     addEntry = function(str) {
-        var indices = hashes.getIndices(str);
 
-        for (var i = indices.length - 1; i >= 0; i--) {
-            bVector[indices[i]] += 1;
-        };
+        try {
+            var indices = hashes.getIndices(str);
+
+            for (var i = indices.length - 1; i >= 0; i--) {
+                bVector[indices[i]] += 1;
+            };
+
+            return true;
+        } catch (err) {
+            throw Error(err);
+        }
+
     }
 
     addEntries = function(arr) {
@@ -71,6 +79,8 @@ var JSBloom = function(items, target_prob) {
             addEntry(arr[i]);
 
         };
+
+        return true;
     }
 
     removeEntries = function(arr) {
@@ -79,6 +89,8 @@ var JSBloom = function(items, target_prob) {
             removeEntry(arr[i]);
 
         };
+
+        return true;
     }
 
     removeEntry = function(str) {
@@ -146,3 +158,7 @@ var JSBloom = function(items, target_prob) {
         exportData: exportData
     };
 }
+
+if (typeof exports !== "undefined") {
+    exports.bloomFilter = JSBloom;
+};
