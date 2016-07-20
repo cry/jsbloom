@@ -1,5 +1,7 @@
 #jsbloom
 
+[![Build Status](https://travis-ci.org/carey-li/jsbloom.svg?branch=master)](https://travis-ci.org/carey-li/jsbloom)
+
 A fast counting bloom filter implementation in JavaScript using the djb2 and sdbm algorithms. 
 
 From _Less Hashing, Same Performance: Building a Better Bloom Filter_ by Adam Kirsch et al, it is possible to build _k_ hash values from only _2_ unique values. Hence, it is sufficient to have two unique hashes generated.
