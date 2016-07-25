@@ -1,7 +1,6 @@
 var assert = require('chai').assert,
     expect = require('chai').expect,
     JSBloom = require('../bloom.js'),
-    countingFilter = new JSBloom.countingFilter(10000, 1E-10),
     filter = new JSBloom.filter(10000, 1E-10),
     generator = function () {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx-xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) { var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8); return v.toString(16); });
