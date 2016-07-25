@@ -8,7 +8,7 @@ From _Less Hashing, Same Performance: Building a Better Bloom Filter_ by Adam Ki
 
 ### Usage
 
-    var filter = new JSBloom(items, false_probability_chance);
+    var filter = new JSBloom(items, false_probability_chance); // VanillaJS
 
     filter.addEntry("xyz");
 

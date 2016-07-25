@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Bloom Filter</title>
 
+    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">
+
     <style>
 
         pre {
@@ -20,9 +22,12 @@
 
     </style>
 </head>
-<body>
+<body style="margin: 15px">
 
-    <h1>Bloom test page</h1>
+    <h1>Bloom test page <small> type: <span id="type">countingFilter</span></small></h1>
+
+    <button class="btn btn-default" onclick="change('filter')">switch to regular</button>
+    <button class="btn btn-default" onclick="change('countingFilter')">switch to counting</button> <br><br>
 
     <input type="text" placeholder="hash field" onkeyup="hash()" id="input">
 
@@ -50,7 +55,7 @@
 
     <hr>
 
-    <input type="text" placeholder="check entry" onkeyup="check()" id="check">
+    <input type="text" placeholder="check entry" onkeyup="check()" id="check"> <br> <br>
 
     <p><span id="search_element"></span> is <span id="status"></span></p>
 
@@ -59,7 +64,17 @@
     <script>
 
         let contents = [],
-            filter = new JSBloom(500, 1E-5);
+            filter = new JSBloom.countingFilter(2000, 1E-10);
+
+        console.info(filter.info);
+
+        var change = function(type) {
+            eval("filter = new JSBloom." + type + "(1000, 1E-10);");
+
+            document.getElementById("type").innerHTML = type;
+
+            console.info(filter.info);
+        }
 
         var hash = function() {
             let val = document.getElementById("input").value;
