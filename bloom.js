@@ -37,43 +37,30 @@ JSBloom.filter = function(items, target_prob) {
             };
 
             return (hash >>> 0) % BUFFER_LEN;
-        },
-        getIndices: function(str) {
-
-            var hashes = [];
-
-            hashes.push(this.djb2(str));
-            hashes.push(this.sdbm(str));
-
-            for (var round = 2; round <= HASH_ROUNDS; round++) {
-                var new_hash = (hashes[0] + (round * hashes[1]) + (round^2)) % BUFFER_LEN;
-
-                hashes.push(new_hash);
-            };
-
-            return hashes;
-
         }
     }
 
     addEntry = function(str) {
 
-            var indices = hashes.getIndices(str);
+        var h1 = hashes.djb2(str)
+        var h2 = hashes.sdbm(str)
+        for (var round = 0; round <= HASH_ROUNDS; round++) {
+            var new_hash = round == 0 ? h1
+                         : round == 1 ? h2
+                         : (h1 + (round * h2) + (round^2)) % BUFFER_LEN;
 
-            for (var i = indices.length - 1; i >= 0; i--) {
+            var extra_indices = new_hash % 8,
+                index = ((new_hash - extra_indices) / 8); 
 
-                var extra_indices = indices[i] % 8,
-                    index = ((indices[i] - extra_indices) / 8); 
+            if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
+                bVector[index] ^= (128 >> extra_indices - 1);
+            } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
+                bVector[index] ^= 1;
+            }
 
-                if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
-                    bVector[index] ^= (128 >> extra_indices - 1);
-                } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
-                    bVector[index] ^= 1;
-                }
+        };
 
-            };
-
-            return true;
+        return true;
     }
 
     addEntries = function(arr) {
@@ -87,12 +74,32 @@ JSBloom.filter = function(items, target_prob) {
     }
 
     checkEntry = function(str) {
+        var index, extra_indices
+        var h1 = hashes.djb2(str)
 
-        var indices = hashes.getIndices(str);
+        extra_indices = h1 % 8;
+        index = ((h1 - extra_indices) / 8);
 
-        for (var i = indices.length - 1; i >= 0; i--) {
-            var extra_indices = indices[i] % 8,
-                index = (indices[i] - extra_indices) / 8;
+        if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
+            return false;
+        } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
+            return false;
+        }
+
+        var h2 = hashes.sdbm(str)
+        extra_indices = h2 % 8;
+        index = ((h2 - extra_indices) / 8);
+
+        if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
+            return false;
+        } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
+            return false;
+        }
+
+        for (var round = 2; round <= HASH_ROUNDS; round++) {
+            var new_hash = round==0?h1:round==1?h2:(h1 + (round * h2) + (round^2)) % BUFFER_LEN;
+            var extra_indices = new_hash % 8,
+                index = ((new_hash - extra_indices) / 8); 
 
             if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
                 return false;
@@ -148,4 +155,3 @@ JSBloom.filter = function(items, target_prob) {
 if (typeof exports !== "undefined") {
     exports.filter = JSBloom.filter;
 };
-
