@@ -58,7 +58,6 @@ JSBloom.filter = function(items, target_prob) {
 
     addEntry = function(str) {
 
-        try {
             var indices = hashes.getIndices(str);
 
             for (var i = indices.length - 1; i >= 0; i--) {
@@ -75,10 +74,6 @@ JSBloom.filter = function(items, target_prob) {
             };
 
             return true;
-        } catch (err) {
-            throw Error(err);
-        }
-
     }
 
     addEntries = function(arr) {
@@ -92,20 +87,21 @@ JSBloom.filter = function(items, target_prob) {
     }
 
     checkEntry = function(str) {
+
         var indices = hashes.getIndices(str);
 
-            for (var i = indices.length - 1; i >= 0; i--) {
-                var extra_indices = indices[i] % 8,
-                    index = (indices[i] - extra_indices) / 8;
+        for (var i = indices.length - 1; i >= 0; i--) {
+            var extra_indices = indices[i] % 8,
+                index = (indices[i] - extra_indices) / 8;
 
-                if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
-                    return false;
-                } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
-                    return false;
-                }
-            };
+            if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
+                return false;
+            } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
+                return false;
+            }
+        };
 
-            return true;
+        return true;
     }
 
     importData = function(lzData, k) {
@@ -152,3 +148,4 @@ JSBloom.filter = function(items, target_prob) {
 if (typeof exports !== "undefined") {
     exports.filter = JSBloom.filter;
 };
+
