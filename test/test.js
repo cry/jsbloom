@@ -63,6 +63,20 @@ describe('JSBloom - Bloom Filter', function() {
 
     });
 
+    describe('Non-Existence', function() {
+        it('should return false for 1000 non elements', function() {
+            var positive = 0;
+            for (var i = 1000 - 1; i >= 0; i--) {
+                if(filter.checkEntry(generator()))
+                    positive ++;
+            };
+            assert.ok(positive <= 10, 'should have had less than 10 positive tests, but had:'+positive);
+        });
+
+    });
+
+
+
     describe('Import & Export', function() {
         it('should return true on predefined element in imported array', function() {
             filter.importData(importData);
@@ -88,3 +102,9 @@ describe('JSBloom - Bloom Filter', function() {
     });
 
 });
+
+
+
+
+
+
