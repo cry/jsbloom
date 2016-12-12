@@ -1,6 +1,6 @@
 {
   "name": "jsbloom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a fast javascript counting bloom filter implementation",
   "main": "bloom.js",
   "directories": {
