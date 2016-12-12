@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carey-li/jsbloom.git"
+    "url": "git+https://github.com/cry/jsbloom.git"
   },
   "keywords": [
     "javascript",
@@ -29,7 +29,7 @@
   "author": "Carey Li",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/carey-li/jsbloom/issues"
+    "url": "https://github.com/cry/jsbloom/issues"
   },
-  "homepage": "https://github.com/carey-li/jsbloom#readme"
+  "homepage": "https://github.com/cry/jsbloom#readme"
 }
