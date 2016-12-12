@@ -1,6 +1,6 @@
 #jsbloom
 
-[![Build Status](https://travis-ci.org/carey-li/jsbloom.svg?branch=master)](https://travis-ci.org/carey-li/jsbloom)
+[![Build Status](https://travis-ci.org/cry/jsbloom.svg?branch=master)](https://travis-ci.org/cry/jsbloom)
 
 A fast bloom filter implementation in JavaScript using the djb2 and sdbm algorithms. 
 
