@@ -63,6 +63,16 @@ describe('JSBloom - Bloom Filter', function() {
 
     });
 
+    describe('Duplicate Insertion', function() {
+        it('should return true for 2000 added elements', function() {
+            for (var i = test_entries.length - 1; i >= 0; i--) {
+                assert.equal(filter.addEntry(test_entries[i]), false);
+            };
+        });
+
+    });
+
+
     describe('Non-Existence', function() {
         it('should return false for 1000 non elements', function() {
             var positive = 0;
