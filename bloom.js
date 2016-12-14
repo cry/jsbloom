@@ -44,6 +44,7 @@ JSBloom.filter = function(items, target_prob) {
 
         var h1 = hashes.djb2(str)
         var h2 = hashes.sdbm(str)
+        var added = false
         for (var round = 0; round <= HASH_ROUNDS; round++) {
             var new_hash = round == 0 ? h1
                          : round == 1 ? h2
@@ -54,13 +55,15 @@ JSBloom.filter = function(items, target_prob) {
 
             if (extra_indices != 0 && (bVector[index] & (128 >> (extra_indices - 1))) == 0) {
                 bVector[index] ^= (128 >> extra_indices - 1);
+                added = true;
             } else if (extra_indices == 0 && (bVector[index] & 1) == 0) {
                 bVector[index] ^= 1;
+                added = true;
             }
 
         };
 
-        return true;
+        return added;
     }
 
     addEntries = function(arr) {
