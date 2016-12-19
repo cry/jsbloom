@@ -153,7 +153,9 @@ JSBloom.filter = function(items, target_prob) {
         hashes: hashes,
         addEntry: addEntry,
         addEntries: addEntries,
-        checkEntry: checkEntry
+        checkEntry: checkEntry,
+        importData: importData,
+        exportData: exportData
     };
 };
 
